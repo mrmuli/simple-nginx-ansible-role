@@ -1,0 +1,1 @@
+# simple-nginx-ansible-role
