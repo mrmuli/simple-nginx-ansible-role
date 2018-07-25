@@ -1,6 +1,6 @@
 # simple-nginx-ansible-role
 
-A simple playbook for installing Nginx and cofiguring a few proxy settings
+A simple role for installing Nginx and cofiguring a few proxy settings
 1. CORS
 2. Upstream and Downstream Encryption
 3. Upstream config for http and tcp connections
