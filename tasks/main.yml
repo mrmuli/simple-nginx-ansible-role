@@ -1,0 +1,5 @@
+---
+
+- name: Setup NGINX
+  import_playbook: 
+    name: install.yml configure.yml
