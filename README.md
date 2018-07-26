@@ -4,7 +4,7 @@ A simple role for installing Nginx and cofiguring a few proxy settings
 1. CORS
 2. Upstream and Downstream Encryption
 3. Upstream config for http and tcp connections
-4. HTTPS redirects
+4. HTTPS redirects #TODO
 5. Passive healthchecks (active only works with NGINX Plus)
 
 
