@@ -1,0 +1,31 @@
+
+user {{ nginx_default_user }};
+pid  {{ nginx_pid }};
+
+events {
+        worker_connections   {{ set_worker_connections }};
+        # multi_accept on;
+}
+
+
+http{
+    # basic settings
+    keepalive_timeout {{ keep_alive_timeout }};
+    types_hash_max_size 2048;
+
+    # log info
+    access_log {{ access_log_dir }}
+    error_log {{ error_log_dir }}
+
+
+    upstream backend {
+    server {{ upstream_address_1 }}:{{ service_port }}   weight=1;
+    server {{ upstream_address_2 }}:{{ service_port }}   weight=1;
+    }
+    server {
+        location / {
+            proxy_pass      http://{{ server_address }};
+            
+        }
+    }
+}

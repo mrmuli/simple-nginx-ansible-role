@@ -1,0 +1,10 @@
+---
+
+nginx_default_user: www-data
+nginx_pid: /run/nginx.pid
+set_worker_connections: 768
+keep_alive_timeout: 65
+server_address: somewhere.com
+upstream_address_1: upstream1.somewhere.com
+upstream_address_2: upstream2.somewhere.com
+service_port: 80
