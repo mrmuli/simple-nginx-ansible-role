@@ -3,11 +3,13 @@
 nginx_default_user: www-data
 nginx_pid: /run/nginx.pid
 set_worker_connections: 768
-client_facing_address: somewhere.com
+server_name: somewhere.com
+upstream_address: upstream.somewhere.com
 upstream_address_1: upstream1.somewhere.com
 upstream_address_2: upstream2.somewhere.com
 service_port: 80
 ssl_cert_path: /usr/local/nginx/conf/cert.pem
 ssl_cert_key: /usr/local/nginx/conf/cert.key
 request_uri: /
-host_address: exa
+tls_version: TLSv1.2
+upstream_ssl_depth: 2

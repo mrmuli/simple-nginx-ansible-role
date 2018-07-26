@@ -22,23 +22,28 @@ http{
     error_log {{ error_log_dir }}
 
 
-    upstream {{ client_facing_address }} {
-    server {{ upstream_address_1 }}:{{ service_port }}   weight=1;
-    server {{ upstream_address_2 }}:{{ service_port }}   weight=1;
+    upstream {{ upstream_address }} {
+    least_conn;
+    server {{ upstream_address_1 }}:{{ service_port }};
+    server {{ upstream_address_2 }}:{{ service_port }};
     }
+    
     server {
         listen {{ service_port }} ssl;
         listen [:::]:{{ service_port }}; 
 
-        servername              somewhere.com
-        ssl_protocol:           TLSv1.2;
+        servername              {{ server_name }}
+        ssl_protocol:           {{ tls_version }};
         ssl_certificate:        {{ ssl_cert_path }}
         ssl_certificate_key:    {{ ssl_cert_key }}
         ssl_session_cache:      shared:SSL:10m
         ssl_session_timeout:    10m;
 
         location {{ request_uri }} {
-            proxy_pass  http://{{ client_facing_address }};
+            proxy_pass  http://{{ upstream_address }};
+            proxy_ssl_verify        on;
+            proxy_ssl_verify_depth  {{ upstream_ssl_depth }};
+            proxy_ssl_protocols     {{ tls_version }};
         }
     }
 }
