@@ -13,3 +13,6 @@ ssl_cert_key: /usr/local/nginx/conf/cert.key
 request_uri: /
 tls_version: TLSv1.2
 upstream_ssl_depth: 2
+max_fails: 5
+fail_timeout: 5s
+proxy_algorithm: least_conn

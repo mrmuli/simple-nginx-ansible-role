@@ -13,9 +13,11 @@ http{
     
     # Async I/O 
     sendfile on;
+
+    keepalive_requests: 100;
+    keepalive_timeout: 50s;
     
     # TODO: error handling
-
 
     # log info
     access_log {{ access_log_dir }}
@@ -23,11 +25,11 @@ http{
 
 
     upstream {{ upstream_address }} {
-    least_conn;
-    server {{ upstream_address_1 }}:{{ service_port }};
-    server {{ upstream_address_2 }}:{{ service_port }};
+    {{ proxy_algorithm }};
+    server {{ upstream_address_1 }}:{{ service_port }} max_fails={{ max_fails }} fail_timeout={{ fail_timeout }};
+    server {{ upstream_address_2 }}:{{ service_port }} max_fails={{ max_fails }} fail_timeout={{ fail_timeout }};
     }
-    
+
     server {
         listen {{ service_port }} ssl;
         listen [:::]:{{ service_port }}; 
