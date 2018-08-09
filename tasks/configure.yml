@@ -1,0 +1,5 @@
+---
+
+- name: Enable SYN cookie
+  shell: sed -i s/#net.ipv4.tcp_syncookies=1/net.ipv4.tcp_syncookies=1/ {{ systctl_conf_path }}
+  notify: restart nginx

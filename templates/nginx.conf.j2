@@ -31,8 +31,8 @@ http{
     }
 
     server {
-        listen {{ service_port }} ssl;
-        listen [:::]:{{ service_port }}; 
+        listen {{ service_port }} ssl;   #v4
+        listen [:::]:{{ service_port }} ssl; #v6
 
         servername              {{ server_name }}
         ssl_protocol:           {{ tls_version }};
@@ -46,6 +46,11 @@ http{
             proxy_ssl_verify        on;
             proxy_ssl_verify_depth  {{ upstream_ssl_depth }};
             proxy_ssl_protocols     {{ tls_version }};
+
+            # uncomment this out if you need to resrict access to specific ip ranges
+            # allow       {{ ip_range }}; # eg 10.0.0.0/20
+            # deny        all;
+
         }
     }
 }
