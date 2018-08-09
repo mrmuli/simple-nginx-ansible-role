@@ -1,4 +1,4 @@
-# simple-nginx-ansible-role
+# simple-nginx-ansible-role (WIP)
 
 A simple role for installing Nginx and cofiguring a few proxy settings
 1. CORS

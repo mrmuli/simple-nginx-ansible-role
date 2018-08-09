@@ -14,10 +14,8 @@ http{
     # Async I/O 
     sendfile on;
 
-    keepalive_requests: 100;
-    keepalive_timeout: 50s;
-    
-    # TODO: error handling
+    keepalive_requests: {{ keepalive_requests }};
+    keepalive_timeout: {{ keepalive_timeout }};
 
     # log info
     access_log {{ access_log_dir }}
@@ -38,8 +36,8 @@ http{
         ssl_protocol:           {{ tls_version }};
         ssl_certificate:        {{ ssl_cert_path }}
         ssl_certificate_key:    {{ ssl_cert_key }}
-        ssl_session_cache:      shared:SSL:10m
-        ssl_session_timeout:    10m;
+        ssl_session_cache:      {{ ssl_session_cache }}
+        ssl_session_timeout:    {{ ssl_session_timeout }};
 
         location {{ request_uri }} {
             proxy_pass  http://{{ upstream_address }};

@@ -16,5 +16,9 @@ upstream_ssl_depth: 2
 max_fails: 5
 fail_timeout: 5s
 proxy_algorithm: least_conn
+keepalive_requests: 100
+keepalive_timeout: 50s
+ssl_session_timeout: 10m
+ssl_session_cache: shared:SSL:10m
 
 systctl_conf_path: /etc/sysctl.conf
