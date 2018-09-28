@@ -28,6 +28,13 @@ http{
     server {{ upstream_address_2 }}:{{ service_port }} max_fails={{ max_fails }} fail_timeout={{ fail_timeout }};
     }
 
+    map $request_method $cors_method {
+        OPTIONS 11;
+        GET 1;
+        POST 1;
+        default 0;
+    }
+
     server {
         listen {{ service_port }} ssl;   #v4
         listen [:::]:{{ service_port }} ssl; #v6
@@ -40,6 +47,18 @@ http{
         ssl_session_timeout:    {{ ssl_session_timeout }};
 
         location {{ request_uri }} {
+            if ($cors_method ~ '1'){
+                add_header 'Access-Control-Allow-Methods'
+                    GET,POST,OPTIONS;
+                add_header 'Access-Control-Allow-Origin'
+                    '*.com'
+            }
+            if ($cors_method ~ '11'){
+                add_header 'Access-Control-Max-Age' 1728000;
+                add_header 'Content-Type' 'text/plain charset=UTF-8';
+                add_header 'Content-Length' 0;
+                return 204;
+            }
             proxy_pass  http://{{ upstream_address }};
             proxy_ssl_verify        on;
             proxy_ssl_verify_depth  {{ upstream_ssl_depth }};
